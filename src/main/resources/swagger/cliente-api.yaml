@@ -1,0 +1,304 @@
+openapi: 3.0.3
+info:
+  title: Cliente API
+  description: |-
+    API responsável por realizar operações com Clientes
+  contact:
+    email: malikoski@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.6
+#servers:
+#  - url: /clientes
+tags:
+  - name: cliente
+    description: Operações sobre clientes
+paths:
+  /clientes:
+    post:
+      tags:
+        - cliente
+      summary: Adiciona um novo cliente
+      description: Adiciona uma novo cliente para a aplicação
+      operationId: addCliente
+      requestBody:
+        description: Cria um novo cliente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClienteRequest'
+        required: true
+      responses:
+        '204':
+          description: Cliente criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClienteResponse'
+        '405':
+          description: Dados inválidos
+    get:
+      tags:
+        - cliente
+      summary: Retorna todos os clientes
+      description: 'Retorna todos os clientes cadastrados.'
+      operationId: getAllClientes
+      parameters:
+        - name: page
+          in: query
+          description: 'Número da página requisitada.'
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+        - name: size
+          in: query
+          description: 'Tamanho do resultado da página'
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: search
+          in: query
+          description: 'Realiza consulta baseada em uma condição.<br><br>
+                       <b>Operadores:<b> <br>
+                       ":" - Igual <br>
+                       "!" - Negação <br>
+                       ">" - Maior do que <br>
+                       "<" - Menor do que <br>
+                       "~" - Contém(like) <br>
+                       <br>
+                       <b>Exemplo: nome:Joao,idade>25<b>'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operação realizada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/PaginationClienteResponse'
+  '/clientes/{uuid}':
+    get:
+      tags:
+        - cliente
+      summary: Procura um cliente pelo uuid
+      description: Retorna um cliente único
+      operationId: findClienteByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: Uuid(identificador) referente ao cliente desejado
+          example: f73293ac-7b69-4b6c-81a2-0bdb11f93760
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operação realizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClienteResponse'
+        '400':
+          description: UUID inválido
+        '404':
+          description: Cliente não encontrado
+    put:
+      tags:
+        - cliente
+      summary: Atualiza um cliente
+      description: Atualiza um cliente por Uuid
+      operationId: updateCliente
+      parameters:
+        - name: uuid
+          in: path
+          description: Uuid(identificador) referente ao cliente desejado
+          example: f73293ac-7b69-4b6c-81a2-0bdb11f93760
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Atualiza um cliente existente da aplicação
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClienteUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Cliente atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClienteResponse'
+        '400':
+          description: Id informado inválido
+        '404':
+          description: Cliente não encontrado
+        '405':
+          description: Exceção de validação
+components:
+  schemas:
+    ClienteBasicRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Nome
+          minLength: 3
+          maxLength: 255
+        idade:
+          type: integer
+          minimum: 1
+          maximum: 150
+          example: 33
+        endereco:
+          type: string
+          minLength: 3
+          maxLength: 255
+          example: Endereço
+        numero:
+          type: string
+          pattern: '^(?:\d+|s\/n)$'
+          minLength: 1
+          maxLength: 10
+          example: 4327
+        cep:
+          type: string
+          pattern: '^\d+$'
+          minLength: 1
+          maxLength: 8
+          example: 01000000
+        cidade:
+          type: string
+          example: Cidade
+          minLength: 3
+          maxLength: 100
+        uf:
+          $ref: '#/components/schemas/Uf'
+        email:
+          type: string
+          pattern: '^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$'
+          example: seuemail@email.com
+          minLength: 6
+          maxLength: 150
+        telefone:
+          type: string
+          pattern: '^\d+$'
+          example: 4599999999
+      required:
+        - nome
+        - cpf
+        - idade
+        - endereco
+        - email
+    ClienteResponse:
+      type: object
+      properties:
+        uuid:
+          type: string
+        nome:
+          type: string
+        cpf:
+          type: string
+        idade:
+          type: integer
+        endereco:
+          type: string
+        numero:
+          type: string
+        cep:
+          type: string
+        cidade:
+          type: string
+        uf:
+          $ref: '#/components/schemas/Uf'
+        email:
+          type: string
+        telefone:
+          type: string
+    Uf:
+      type: string
+      example: SP
+      enum:
+        - AC
+        - AL
+        - AM
+        - AP
+        - BA
+        - CE
+        - DF
+        - ES
+        - GO
+        - MA
+        - MG
+        - MS
+        - MT
+        - PA
+        - PB
+        - PE
+        - PI
+        - PR
+        - RJ
+        - RN
+        - RO
+        - RR
+        - RS
+        - SC
+        - SE
+        - SP
+        - TO
+    ClienteRequest:
+      allOf:
+        - $ref: '#/components/schemas/ClienteBasicRequest'
+        - type: object
+          required:
+            - rootCause
+          properties:
+            cpf:
+              type: string
+              pattern: '^\d+$'
+              example: 0358045678
+              minLength: 11
+              maxLength: 11
+    ClienteUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/ClienteBasicRequest'
+    PaginationClienteResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClienteResponse'
+        pageable:
+          type: object
+          description: 'Informações de paginação'
+          $ref: '#/components/schemas/Pageable'
+        totalElements:
+          description: 'Total de clientes'
+          type: integer
+          format: int64
+          minimum: 0
+      required:
+        - numberOfItems
+    Pageable:
+      description: Mínimo de parâmetro para consultas paginadas
+      type: object
+      properties:
+        page:
+          type: integer
+        size:
+          type: integer
+  requestBodies:
+    ClienteRequest:
+      description: Dados do Cliente
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClienteRequest'
