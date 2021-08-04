@@ -3,9 +3,9 @@ spring:
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
-    url: jdbc:postgresql://${DB_URL:localhost}:5432/builders
-    username: builders
-    password: builders
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost}:5432/builders}
+    username: ${JDBC_DATABASE_USERNAME:builders}
+    password: ${JDBC_DATABASE_PASSWORD:builders}
   jpa:
     properties:
       hibernate:

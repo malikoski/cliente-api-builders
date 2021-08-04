@@ -59,7 +59,7 @@ services:
    environment:
      SPRING_REDIS_HOST: redis
      SPRING_REDIS_PORT: 6379
-     DB_URL: postgres
+     DATABASE_URL: postgres
    networks:
      - postgres-network
 
