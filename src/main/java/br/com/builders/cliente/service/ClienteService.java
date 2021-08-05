@@ -13,6 +13,7 @@ import br.com.builders.cliente.resource.dto.PaginationClienteResponse;
 import com.google.common.base.Joiner;
 import io.vavr.Tuple;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageImpl;
@@ -32,6 +33,7 @@ import static java.util.Optional.of;
 @Service
 @RequiredArgsConstructor
 @Validated
+@Slf4j
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
@@ -57,6 +59,7 @@ public class ClienteService {
     @Cacheable(value = "clientes", key = "#page.toString().concat('-').concat(#size.toString()).concat(#search.orElse(''))")
     public PaginationClienteResponse findAll(final Integer page, final Integer size, final Optional<String> search) {
 
+        log.info("findAll(page, size, search) started.");
         var pageable = PageRequest.of(page, size);
 
         var clientesResponse = search
