@@ -1,13 +1,13 @@
 server:
-  port: 8080
+  port: ${PORT}
 spring:
   datasource:
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
-    url: jdbc:postgresql://localhost:5432/builders
-    username: builders
-    password: builders
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
   jpa:
     properties:
       hibernate:
@@ -16,9 +16,9 @@ spring:
   cache:
     type: redis
   redis:
-    #host: localhost
-    #port: 6379
-    url: ${REDIS_URL}
+    host: ${REDIS_URL}
+    port: ${REDIS_PORT}
+
 
   mustache:
     check-template-location: false
