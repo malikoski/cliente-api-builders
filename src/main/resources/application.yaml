@@ -16,9 +16,9 @@ spring:
   cache:
     type: redis
   redis:
-    #host: localhost
-    #port: 6379
-    #url: ${REDIS_URL}
+    host: localhost
+    port: 6379
+
 
   mustache:
     check-template-location: false
