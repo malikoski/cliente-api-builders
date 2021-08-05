@@ -27,7 +27,6 @@ spring:
     level:
       org.springframework.web: DEBUG
 
-  ## Actuator config
 management:
   endpoints:
     web:
@@ -38,11 +37,5 @@ management:
     metrics:
       enabled: true
 
-
-
 springdoc:
   version: '@springdoc.version@'
-#  swagger-ui:
-#    use-root-path: true
-  #api-docs:
-#    path: /api-docs
