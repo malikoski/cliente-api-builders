@@ -18,7 +18,7 @@ spring:
   redis:
     #host: localhost
     #port: 6379
-    url: ${REDIS_URL}
+    #url: ${REDIS_URL}
 
   mustache:
     check-template-location: false
