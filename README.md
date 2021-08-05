@@ -27,4 +27,4 @@ Se encontra no próprio repositório os seguintes arquivos para serem importados
 * `https://cliente-api-builders.herokuapp.com/swagger-ui.html`
 
 #### Local via docker
-* `http://localhost:800/swagger-ui.html`
+* `http://localhost:8080/swagger-ui.html`
