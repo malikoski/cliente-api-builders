@@ -13,6 +13,10 @@ Todos os plugins e dependências estão disponíveis em: [Maven Central](https:/
 
 * `docker-compose up -d`
 
+Observação: Em linux pode ocorrer erro ao construir/subir a aplicação para o volume utilizado pelo serviço postgres. Se ocorrer deve ser executado o seguinte comando:
+
+`sudo chown -R $USER:$USER .docker/pgdata`
+
 #### Test the Endpoint
 
 Se encontra no próprio repositório os seguintes arquivos para serem importados no [Postman](https://www.postman.com/)
