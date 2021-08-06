@@ -3,7 +3,8 @@ Challenge API Clientes for Builders.
 
 ### Getting Started
 
-Todos os plugins e dependências estão disponíveis em: [Maven Central](https://search.maven.org/). 
+Todos os plugins e dependências estão disponíveis em: [Maven Central](https://search.maven.org/).
+JDK e ferramentas utilizadas para construção da aplicação:
 
 * JDK 16 (somente para execução em IDE ou por linha de comando) 
 * Maven 3.8+ (somente para execução em IDE ou por linha de comando)
